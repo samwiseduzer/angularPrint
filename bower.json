@@ -1,0 +1,27 @@
+{
+  "name": "angularPrint",
+  "main": "angularPrint.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/samwiseduzer/angularPrint",
+  "authors": [
+    "Sam Duzett <samuel.duzett@gmail.com>"
+  ],
+  "description": "Angular module that allows the user to select and hide elements for printing and/or dynamically populate and print a table.",
+  "keywords": [
+    "angular",
+    "angularJS",
+    "print",
+    "media",
+    "query",
+    "table",
+    "select"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
