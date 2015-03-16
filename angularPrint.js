@@ -1,15 +1,15 @@
 'use strict';
 (function(){
     var AngularPrint = angular.module('AngularPrint',[]);
-    AngularPrint.directive('printSection',function(){
+    AngularPrint.directive('printSection',['printData', function(printData){
         return {
             restrict: 'A',
             link: function(element, attr){
 
-                function printElement(elem) {
+                function printElement(elem, printSection) {
                     // clones the element you want to print
                     if(!printData.usingTable){
-                        printSection.appendChild(domClone);
+                        printSection.appendChild(elem);
                     }
                 }
 
@@ -32,27 +32,34 @@
                             }
                         }
                         if(attr.removeClass){
-                            var classesToRemove = attr.removeClass.spliy(' ');
-                            for(var i = 0; i < classesToRemove.length; i++){
-                                elem.classList.remove(classesToRemove[i]);
+                            var classesToRemove = attr.removeClass.split(' ');
+                            for(var j = 0; j < classesToRemove.length; j++){
+                                elem.classList.remove(classesToRemove[j]);
                             }
                         }
-                        printElement(elem);
+                        printElement(elem, printSection);
                     }
                 }
                 init();
             }
-        }
-    });
+        };
+    }]);
     AngularPrint.directive('printBtn',['printData','$window', function(printData,$window){
         return {
             restrict: 'A',
             link: function(element){
 
+                var printSection = document.getElementById('printSection');
+                if(!printSection){
+                    printSection = document.createElement('div');
+                    printSection.id = 'printSection';
+                    document.body.appendChild(printSection);
+                }
+
                 function createTable(){
-                    var table = createElement('table');
+                    var table = document.createElement('table');
                     var colNames = printData.colNames;
-                    var th = createElement('th');
+                    var th = document.createElement('th');
                     for(var i = 0, text; i < colNames.length; i++){
                         th.addChildNode('td');
                         text = document.createTextNode(colNames[i]);
@@ -60,12 +67,12 @@
                     }
                     table.appendChild(th);
                     var rows = printData.tableData;
-                    for(i = 0, tr; i < rows.length; i++){
-                        tr = createElement('tr');
-                        for(var j = 0, text; j < colNames.length; j++){
+                    for(var j = 0, tr; j < rows.length; j++){
+                        tr = document.createElement('tr');
+                        for(var k = 0, tdText; k < colNames.length; k++){
                             tr.appendChild('td');
-                            text = document.createTextNode(printData[j]);
-                            tr.cells[j].appendChild(text);
+                            tdText = document.createTextNode(printData[k]);
+                            tr.cells[k].appendChild(tdText);
                         }
                         table.appendChild(tr);
                     }
@@ -84,19 +91,9 @@
                 $window.onafterprint = function () {
                     // clean the print section before adding new content
                     printSection.innerHTML = '';
-                }
-
-                function init(){
-                    var printSection = document.getElementById('printSection');
-                    if(!printSection){
-                        printSection = document.createElement('div');
-                        printSection.id = 'printSection';
-                        document.body.appendChild(printSection);
-                    }
-                }
-                init();
+                };
             }
-        }
+        };
     }]);
     AngularPrint.directive('printHide',function(){
         return {
@@ -105,7 +102,7 @@
                 var elem = element;
                 elem.classList.addClass('hidePrint');
             }
-        }
+        };
     });
     AngularPrint.directive('printRow', ['printData', function(printData){
         return {
@@ -121,31 +118,29 @@
                     return true;
                 }
 
-                function init(){
-                    if(!attr.strictPrint || validateRow()){
-                        var row = {};
-                        for(prop in attr.obj){
-                            for(var i = 0; i < attr.colList.length; i++){
-                                if(attr.colList[i][prop]){
-                                    row[attr.colList[i][prop]] = attr.obj[prop];
-                                }
+                if(!attr.strictPrint || validateRow()){
+                    var row = {};
+                    for(var prop in attr.obj){
+                        for(var i = 0; i < attr.colList.length; i++){
+                            if(attr.colList[i][prop]){
+                                row[attr.colList[i][prop]] = attr.obj[prop];
                             }
                         }
-                        printData.addRow(row);
-                        if(!printData.colNames.length){
-                            var colNames = [];
-                            for(var j = 0; j < attr.colList.length; j++){
-                                colNames.push(attr.colList[i][Object.keys(attr.colList[i])[0]]);
-                            }
-                            printData.setColNames(colNames);
+                    }
+                    printData.addRow(row);
+                    if(!printData.colNames.length){
+                        var colNames = [];
+                        for(var j = 0; j < attr.colList.length; j++){
+                            colNames.push(attr.colList[j][Object.keys(attr.colList[j])[0]]);
                         }
-                        if(attr.addClass){
-                            printData.setAddClasses(attr.addClass);
-                        }
+                        printData.setColNames(colNames);
+                    }
+                    if(attr.addClass){
+                        printData.setAddClasses(attr.addClass);
                     }
                 }
             }
-        }
+        };
     }]);
     AngularPrint.service('printData', function(){
         this.tableData = [];
@@ -164,4 +159,4 @@
             this.colNames = arr;
         };
     });
-})()
+})();
