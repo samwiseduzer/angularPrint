@@ -1,5 +1,5 @@
 @media screen {
-    #printSection {
+    .printSection {
         display: none;
     }
 }
@@ -7,15 +7,15 @@
     body * {
         visibility: hidden;
     }
-    #printSection {
+    .printSection {
         position: absolute;
         left: 0;
         top: 0;
     }
-    #printSection, #printSection * {
+    .printSection, .printSection * {
         visibility: visible;
     }
-    #printSection .printHide{
+    .printSection .printHide{
         visibility: none;
     }
     .printHide .printShow *{

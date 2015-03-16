@@ -1,53 +1,45 @@
 'use strict';
+
 (function(){
     var AngularPrint = angular.module('AngularPrint',[]);
-    AngularPrint.directive('printSection',['printData', function(printData){
+    AngularPrint.directive('printSection',function(){
         return {
             restrict: 'A',
-            link: function(element, attr){
+            link: {
+                post: function(scope, element, attr){
 
-                function printElement(elem, printSection) {
-                    // clones the element you want to print
-                    if(!printData.usingTable){
+                    function printElement(elem) {
+                        var parent = elem.parentNode;
+                        var printSection = document.createElement('div');
+                        printSection.class = 'printSection';
                         printSection.appendChild(elem);
-                    }
-                }
-
-                function init(){
-                    var printSection = document.getElementById('printSection');
-                    // if there is no printing section, create one
-                    if (!printSection) {
-                        printSection = document.createElement('div');
-                        printSection.id = 'printSection';
-                        document.body.appendChild(printSection);
+                        parent.appendChild(printSection);
                     }
 
-                    if(element){
-                        var elem = element.cloneNode(true);
-                        elem.classList.addClass('printShow');
-                        if(attr.addClass){
-                            var classesToAdd = attr.addClass.split(' ');
-                            for(var i = 0; i < classesToAdd.length; i++){
-                                elem.classList.add(classesToAdd[i]);
-                            }
+                    var elem = document.getElementById(attr.printElementId);
+                    elem = elem.cloneNode(true);
+                    elem.classList.add('printShow');
+                    if(attr.addClass){
+                        var classesToAdd = attr.addClass.split(' ');
+                        for(var i = 0; i < classesToAdd.length; i++){
+                            elem.classList.add(classesToAdd[i]);
                         }
-                        if(attr.removeClass){
-                            var classesToRemove = attr.removeClass.split(' ');
-                            for(var j = 0; j < classesToRemove.length; j++){
-                                elem.classList.remove(classesToRemove[j]);
-                            }
-                        }
-                        printElement(elem, printSection);
                     }
+                    if(attr.removeClass){
+                        var classesToRemove = attr.removeClass.split(' ');
+                        for(var j = 0; j < classesToRemove.length; j++){
+                            elem.classList.remove(classesToRemove[j]);
+                        }
+                    }
+                    printElement(elem);
                 }
-                init();
             }
         };
-    }]);
+    });
     AngularPrint.directive('printBtn',['printData','$window', function(printData,$window){
         return {
             restrict: 'A',
-            link: function(element){
+            link: function(scope,element){
 
                 var printSection = document.getElementById('printSection');
                 if(!printSection){
@@ -86,19 +78,15 @@
                         createTable();
                     }
                     $window.print();
+                    //printSection.innerHTML = '';
                 });
-
-                $window.onafterprint = function () {
-                    // clean the print section before adding new content
-                    printSection.innerHTML = '';
-                };
             }
         };
     }]);
     AngularPrint.directive('printHide',function(){
         return {
             restrict: 'A',
-            link: function(element){
+            link: function(scope, element){
                 var elem = element;
                 elem.classList.addClass('hidePrint');
             }
@@ -107,7 +95,7 @@
     AngularPrint.directive('printRow', ['printData', function(printData){
         return {
             restrict: 'A',
-            link: function(attr){
+            link: function(scope, element, attr){
 
                 function validateRow(){
                     for(var i = 0; i < attr.colList.length; i++){
@@ -119,6 +107,7 @@
                 }
 
                 if(!attr.strictPrint || validateRow()){
+                    printData.usingtable = true;
                     var row = {};
                     for(var prop in attr.obj){
                         for(var i = 0; i < attr.colList.length; i++){
@@ -146,6 +135,7 @@
         this.tableData = [];
         this.addClasses = [];
         this.colNames = [];
+        this.usingTable = false;
         this.addRow = function(row){
             this.tableData.push(row);
         };
