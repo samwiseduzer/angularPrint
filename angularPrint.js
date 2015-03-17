@@ -36,7 +36,6 @@
         return {
             restrict: 'A',
             link: function(scope, element){
-
                 element.on('click', function(){
                     $window.print();
                 });
@@ -47,38 +46,38 @@
     AngularPrint.directive('printTable', function(){
         return{
             restrict: 'E',
-            template: '<div id="printTable"></div>',
-            scope: {
-                options: '='
-            },
-            link: function(scope,element){
+            scope: {options: '='},
+            link: function(scope, element){
 
-                function validateRow(row){
-                    for(var i = 0; i < colNames.length; i++){
-                        if(!row[colNames[i]]){
-                            return false;
-                        }
-                    }
-                    return true;
-                }
+                var makeTable = function(){
 
-                function addRow(row){
-                    if(!scope.options.strictObj || validateRow(row)){
-                        var tr = document.createElement('tr');
-                        for(var i = 0, value; i < colNames.length; i++){
-                            value = document.createTextNode(row[colNames[i]] ? row[colNames[i]] : '');
-                            tr.appendChild('td');
-                            tr.cells[i].appendChild(value);
-                            if(classMap[colNames[i]]){
-                                tr.cells[i].className = classMap[colNames[i]];
+                    function validateRow(row){
+                        for(var i = 0; i < colNames.length; i++){
+                            if(!row[colNames[i]]){
+                                return false;
                             }
                         }
-                        tbody.appendChild(tr);
+                        return true;
                     }
-                }
 
-                if(scope.options.data){
+                    function addRow(row){
+                        if(!scope.options.strictObj || validateRow(row)){
+                            var tr = document.createElement('tr');
+                            for(var i = 0, value; i < colNames.length; i++){
+                                value = document.createTextNode(row[colNames[i]] ? row[colNames[i]] : '');
+                                tr.appendChild('td');
+                                tr.cells[i].appendChild(value);
+                                if(classMap[colNames[i]]){
+                                    tr.cells[i].className = classMap[colNames[i]];
+                                }
+                            }
+                            tbody.appendChild(tr);
+                        }
+                    }
+
                     var elem = element[0];
+                    elem.innerHTML = '';
+                    elem.id = 'printTable';
                     var colMap = scope.options.colMap;
                     var table = document.createElement('table');
                     var colNames = [];
@@ -114,6 +113,13 @@
                     table.appendChild(tbody);
                     table.className = scope.options.tableClasses;
                     elem.appendChild(table);
+                };
+
+                if(scope.options.data){
+                    makeTable();
+                }
+                else{
+                    scope.$watch(scope.options, makeTable);
                 }
             }
         };
