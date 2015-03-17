@@ -1,24 +1,23 @@
-@media screen {
-    .printSection {
-        display: none;
+@media screen{
+    #printTable, #printTable *{
+        display:none;
     }
 }
 @media print {
     body * {
         visibility: hidden;
     }
-    .printSection {
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
     .printSection, .printSection * {
         visibility: visible;
+        margin-top:10px;
     }
-    .printSection .printHide{
-        visibility: none;
+    .printSection .printRemove, .printSection .printRemove *{
+        display:none;
     }
-    .printHide .printShow *{
+    .printSection .printHide, .printSection .printHide *{
+        visibility:hidden;
+    }
+    .printHide .printSection *{
         visibility: visible;
     }
 }
