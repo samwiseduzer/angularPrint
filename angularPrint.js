@@ -6,9 +6,12 @@
             return {
                 restrict: 'A',
                 link: {
-                    pre: function(scope, element, attr){
+                    post: function(scope, element, attr){
                         var elem = document.getElementById(attr.printElementId);
+                        var parent = elem.parentNode;
+                        elem = elem.cloneNode(true);
                         elem.classList.add('printShow');
+                        elem.classList.add('printSection');
                         if(attr.addClass){
                             var classesToAdd = attr.addClass.split(' ');
                             for(var i = 0; i < classesToAdd.length; i++){
@@ -21,11 +24,8 @@
                                 elem.classList.remove(classesToRemove[j]);
                             }
                         }
-                        var printSection = document.createElement('div');
-                        printSection.appendChild(elem);
-                        var parent = elem.parentNode;
-                        parent.id = parent.id + ' ' + printData.assignParentId();
-                        printData.addElem(printSection);
+                        parent.className = parent.className + ' ' + printData.assignParentClass();
+                        printData.addElem(elem);
                     }
                 }
             };
@@ -71,11 +71,13 @@
                         createTable();
                     }
                     for(var i = 1, parent; i <= printData.count; i++){
-                        parent = document.getElementById('AngularPrintParent' + i);
+                        parent = document.getElementsByClassName('AngularPrintParent' + i)[0];
                         parent.appendChild(printData.elems[i-1]);
                     }
                     $window.print();
-                    document.getElementById('AngularPrintTable').innerHTML = '';
+                    if(printData.usingTable){
+                        document.getElementsById('AngularPrintTable').innerHTML = '';
+                    }
                 });
             }
         };
@@ -83,13 +85,14 @@
     AngularPrint.directive('printHide',function(){
         return {
             restrict: 'A',
-            link: function(scope, element){
-                var elem = element;
+            link: function(scope, element, attr){
+                var elem = document.getElementById(attr.printElementId);
                 elem.classList.addClass('hidePrint');
             }
         };
     });
     AngularPrint.directive('printRow', ['printData', function(printData){
+        //attrs: obj({prop:value}), colList([{obj prop:string colName}]), strictPrint(bool)
         return {
             restrict: 'A',
             link: function(scope, element, attr){
@@ -135,6 +138,10 @@
         this.colNames = [];
         this.count = 0;
         this.elems = [];
+        function elem(el, attrs, parentId){
+            this.el = el;
+            this.parentId = parentId;
+        }
         this.addRow = function(row){
             this.tableData.push(row);
         };
@@ -144,7 +151,7 @@
         this.setColNames = function(arr){
             this.colNames = arr;
         };
-        this.assignParentId = function(){
+        this.assignParentClass = function(){
             this.count++;
             return 'AngularPrintParent' + this.count;
         };
