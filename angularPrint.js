@@ -37,7 +37,7 @@
             restrict: 'A',
             link: function(scope, element, attr){
                 element.on('click', function(){
-                    var table = document.getElementById('printTable');
+                    var table = document.getElementById('apTable');
                     if(attr.hideTable){
                         if(table){
                             table.classList.add('printRemove');
@@ -102,7 +102,7 @@
 
                     var elem = element[0];
                     elem.innerHTML = '';
-                    elem.id = 'printTable';
+                    elem.id = 'apTable';
                     var colMap = scope.options.colMap;
                     var table = document.createElement('table');
                     var colNames = [];
@@ -154,19 +154,23 @@
         return{
             restrict: 'A',
             link: function(scope, element){
-                var elem = element[0];
-                elem.classList.add('printSection');
-                var tds = elem.getElementsByTagName('td');
-                for(var i = 0, content, div; i < tds.length; i++){
-                    content = tds[i].innerHTML;
-                    tds[i].innerHTML = '';
-                    div = document.createElement('div');
-                    div.className = 'avoidPageBreak';
-                    div.innerHTML = content;
-                    tds[i].appendChild(div);
-                }
+                setTimeout(function(){
+                    var elem = element[0].cloneNode(true);
+                    elem.classList.add('printSection');
+                    elem.classList.add('printOnly');
+                    var tds = elem.getElementsByTagName('td');
+                    for(var i = 0, content, div; i < tds.length; i++){
+                        content = tds[i].innerHTML;
+                        tds[i].innerHTML = '';
+                        div = document.createElement('div');
+                        div.className = 'avoidPageBreak';
+                        div.innerHTML = content;
+                        tds[i].appendChild(div);
+                    }
+                    element[0].parentNode.insertBefore(elem,element[0]);
+                }, 1000);
             }
         };
     });
-    
+
 })();

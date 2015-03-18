@@ -1,7 +1,7 @@
 {
   "name": "angularPrint",
   "main": "angularPrint.js",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "homepage": "https://github.com/samwiseduzer/angularPrint",
   "authors": [
     "Sam Duzett <samuel.duzett@gmail.com>"

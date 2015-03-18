@@ -1,8 +1,8 @@
 @media screen{
-    #printTable, #printTable *{
+    #apTable, #apTable *{
         display:none;
     }
-    .apHide{
+    .printOnly{
         display:none;
     }
 }
@@ -10,12 +10,14 @@
     body * {
         visibility:hidden;
     }
-    #printTable, #printTable *{
+    .printOnly{
+        visibility:visible;
+    }
+    #apTable, #apTable *{
         visibility:visible;
     }
     .printSection, .printSection * {
         visibility:visible;
-        margin-top:10px;
     }
     .printRemove, .printRemove *{
         display:none;
@@ -30,6 +32,9 @@
         visibility:visible;
     }
     .avoidPageBreak{
+        page-break-inside:avoid;
+    }
+    td div{
         page-break-inside:avoid;
     }
 }
