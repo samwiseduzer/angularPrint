@@ -155,10 +155,8 @@
             restrict: 'A',
             scope: {data:'='},
             link: function(scope, element, attr){
-                function createClone(){
-                    if(!scope.data || scope.data.length === 0){
-                        return;
-                    }
+                function createClone(newVal){
+                    if(newVal == null) return;
                     var elem = element[0].cloneNode(true);
                     elem.classList.add('printSection');
                     elem.classList.add('printOnly');
