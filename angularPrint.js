@@ -65,7 +65,7 @@
                     function addRow(row){
 
                         var tr = document.createElement('tr');
-                        for(var i = 0, value, td; i < colNames.length; i++){
+                        for(var i = 0, value, td, div; i < colNames.length; i++){
                             td = document.createElement('td');
                             if(compMap[colNames[i]]){
                                 var argsArr = [];
@@ -78,7 +78,10 @@
                                 return;
                             }
                             value = document.createTextNode(row[colNames[i]] ? row[colNames[i]] : '');
-                            td.appendChild(value);
+                            div = document.createElement('div');
+                            div.appendChild(value);
+                            div.className = 'avoidPageBreak';
+                            td.appendChild(div);
                             tr.appendChild(td);
                             if(classMap[colNames[i]]){
                                 tr.cells[i].className = classMap[colNames[i]];
@@ -127,7 +130,9 @@
                         addRow(row);
                     }
                     table.appendChild(tbody);
-                    table.className = scope.options.tableClasses;
+                    if(scope.options.tableClasses){
+                        table.className = scope.options.tableClasses;
+                    }
                     elem.appendChild(table);
                 };
 

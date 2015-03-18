@@ -26,4 +26,7 @@
     .printRemove .printSection *{
         visibility: visible;
     }
+    .avoidPageBreak{
+        page-break-inside: avoid;
+    }
 }
