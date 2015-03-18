@@ -153,11 +153,21 @@
     AngularPrint.directive('printTable', function(){
         return{
             restrict: 'A',
+            scope: {data:'='},
             link: function(scope, element, attr){
-                setTimeout(function(){
+                function createClone(){
+                    if(!scope.data || scope.data.length === 0){
+                        return;
+                    }
                     var elem = element[0].cloneNode(true);
                     elem.classList.add('printSection');
                     elem.classList.add('printOnly');
+                    var old = document.getElementById('print-table');
+                    if(old){
+                        old.parentNode.removeChild(old);
+                    }
+                    elem.id = 'print-table';
+                    if(document.getElementById('print-table'))
                     if(attr.addClass){
                         elem.className += ' ' + attr.addClass;
                     }
@@ -171,7 +181,9 @@
                         tds[i].appendChild(div);
                     }
                     element[0].parentNode.insertBefore(elem,element[0]);
-                }, 1000);
+                }
+
+                scope.$watchCollection('data', createClone);
             }
         };
     });
