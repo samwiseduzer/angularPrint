@@ -153,11 +153,14 @@
     AngularPrint.directive('printTable', function(){
         return{
             restrict: 'A',
-            link: function(scope, element){
+            link: function(scope, element, attr){
                 setTimeout(function(){
                     var elem = element[0].cloneNode(true);
                     elem.classList.add('printSection');
                     elem.classList.add('printOnly');
+                    if(attr.addClass){
+                        elem.className += ' ' + attr.addClass;
+                    }
                     var tds = elem.getElementsByTagName('td');
                     for(var i = 0, content, div; i < tds.length; i++){
                         content = tds[i].innerHTML;
