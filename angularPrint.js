@@ -166,7 +166,6 @@
                             old.parentNode.removeChild(old);
                         }
                         elem.id = 'print-table';
-                        if(document.getElementById('print-table'))
                         if(attr.addClass){
                             elem.className += ' ' + attr.addClass;
                         }
