@@ -54,15 +54,14 @@
         };
     }]);
     //attrs: colMap{objProp:{colName:string,addClassess:string}}, data[{}], strictObj(bool), tableClasses(string)
-    AngularPrint.directive('printTable', function(){
+    AngularPrint.directive('apTable', function(){
         return{
             restrict: 'E',
             scope: {options: '='},
             link: function(scope, element){
 
                 var makeTable = function(newVal) {
-                    if (newVal == null)
-                        return;
+                    if(newVal == null) return;
 
                     function validateRow(row){
                         for(var i = 0; i < colNames.length; i++){
@@ -151,4 +150,23 @@
             }
         };
     });
+    AngularPrint.directive('printTable', function(){
+        return{
+            restrict: 'A',
+            link: function(scope, element){
+                var elem = element[0];
+                elem.classList.add('printSection');
+                var tds = elem.getElementsByTagName('td');
+                for(var i = 0, content, div; i < tds.length; i++){
+                    content = tds[i].innerHTML;
+                    tds[i].innerHTML = '';
+                    div = document.createElement('div');
+                    div.className = 'avoidPageBreak';
+                    div.innerHTML = content;
+                    tds[i].appendChild(div);
+                }
+            }
+        };
+    });
+    
 })();

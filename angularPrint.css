@@ -2,16 +2,19 @@
     #printTable, #printTable *{
         display:none;
     }
+    .apHide{
+        display:none;
+    }
 }
 @media print {
     body * {
-        visibility: hidden;
+        visibility:hidden;
     }
     #printTable, #printTable *{
         visibility:visible;
     }
     .printSection, .printSection * {
-        visibility: visible;
+        visibility:visible;
         margin-top:10px;
     }
     .printRemove, .printRemove *{
@@ -21,12 +24,12 @@
         visibility:hidden;
     }
     .printHide .printSection *{
-        visibility: visible;
+        visibility:visible;
     }
     .printRemove .printSection *{
-        visibility: visible;
+        visibility:visible;
     }
     .avoidPageBreak{
-        page-break-inside: avoid;
+        page-break-inside:avoid;
     }
 }
