@@ -157,30 +157,31 @@
             link: function(scope, element, attr){
                 function createClone(newVal){
                     if(newVal == null) return;
-                    var elem = element[0].cloneNode(true);
-                    elem.classList.add('printSection');
-                    elem.classList.add('printOnly');
-                    var old = document.getElementById('print-table');
-                    if(old){
-                        old.parentNode.removeChild(old);
-                    }
-                    elem.id = 'print-table';
-                    if(document.getElementById('print-table'))
-                    if(attr.addClass){
-                        elem.className += ' ' + attr.addClass;
-                    }
-                    var tds = elem.getElementsByTagName('td');
-                    for(var i = 0, content, div; i < tds.length; i++){
-                        content = tds[i].innerHTML;
-                        tds[i].innerHTML = '';
-                        div = document.createElement('div');
-                        div.className = 'avoidPageBreak';
-                        div.innerHTML = content;
-                        tds[i].appendChild(div);
-                    }
-                    element[0].parentNode.insertBefore(elem,element[0]);
+                    setTimeout(function(){
+                        var elem = element[0].cloneNode(true);
+                        elem.classList.add('printSection');
+                        elem.classList.add('printOnly');
+                        var old = document.getElementById('print-table');
+                        if(old){
+                            old.parentNode.removeChild(old);
+                        }
+                        elem.id = 'print-table';
+                        if(document.getElementById('print-table'))
+                        if(attr.addClass){
+                            elem.className += ' ' + attr.addClass;
+                        }
+                        var tds = elem.getElementsByTagName('td');
+                        for(var i = 0, content, div; i < tds.length; i++){
+                            content = tds[i].innerHTML;
+                            tds[i].innerHTML = '';
+                            div = document.createElement('div');
+                            div.className = 'avoidPageBreak';
+                            div.innerHTML = content;
+                            tds[i].appendChild(div);
+                        }
+                        element[0].parentNode.insertBefore(elem,element[0]);
+                    },1000);
                 }
-
                 scope.$watchCollection('data', createClone);
             }
         };
