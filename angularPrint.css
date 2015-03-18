@@ -7,17 +7,23 @@
     body * {
         visibility: hidden;
     }
+    #printTable, #printTable *{
+        visibility:visible;
+    }
     .printSection, .printSection * {
         visibility: visible;
         margin-top:10px;
     }
-    .printSection .printRemove, .printSection .printRemove *{
+    .printRemove, .printRemove *{
         display:none;
     }
-    .printSection .printHide, .printSection .printHide *{
+    .printHide, .printHide *{
         visibility:hidden;
     }
     .printHide .printSection *{
+        visibility: visible;
+    }
+    .printRemove .printSection *{
         visibility: visible;
     }
 }

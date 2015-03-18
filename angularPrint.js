@@ -49,7 +49,9 @@
             scope: {options: '='},
             link: function(scope, element){
 
-                var makeTable = function(){
+                var makeTable = function(newVal) {
+                    if (newVal == null)
+                        return;
 
                     function validateRow(row){
                         for(var i = 0; i < colNames.length; i++){
@@ -61,15 +63,25 @@
                     }
 
                     function addRow(row){
-                        if(!scope.options.strictObj || validateRow(row)){
-                            var tr = document.createElement('tr');
-                            for(var i = 0, value; i < colNames.length; i++){
-                                value = document.createTextNode(row[colNames[i]] ? row[colNames[i]] : '');
-                                tr.appendChild('td');
-                                tr.cells[i].appendChild(value);
-                                if(classMap[colNames[i]]){
-                                    tr.cells[i].className = classMap[colNames[i]];
+
+                        var tr = document.createElement('tr');
+                        for(var i = 0, value, td; i < colNames.length; i++){
+                            td = document.createElement('td');
+                            if(compMap[colNames[i]]){
+                                var argsArr = [];
+                                for(var j = 0; j < compMap[colNames[i]].params.length; j++){
+                                    argsArr.push(row[compMap[colNames[i]].params[j]]);
                                 }
+                                row[colNames[i]] = compMap[colNames[i]].fn.apply(this,argsArr);
+                            }
+                            if(scope.options.strictObj && !validateRow(row)){
+                                return;
+                            }
+                            value = document.createTextNode(row[colNames[i]] ? row[colNames[i]] : '');
+                            td.appendChild(value);
+                            tr.appendChild(td);
+                            if(classMap[colNames[i]]){
+                                tr.cells[i].className = classMap[colNames[i]];
                             }
                             tbody.appendChild(tr);
                         }
@@ -82,19 +94,22 @@
                     var table = document.createElement('table');
                     var colNames = [];
                     var classMap = {};
+                    var compMap = {};
                     for(var prop in colMap){
                         colNames.push(colMap[prop].colName);
-                    }
-                    for(var index in colMap){
-                        classMap[colMap[index].colName] = colMap[index].addClass;
+                        classMap[colMap[prop].colName] = colMap[prop].addClass;
+                        if(colMap[prop].composition){
+                            compMap[colMap[prop].colName] = colMap[prop].composition;
+                        }
                     }
 
                     var thead = document.createElement('thead');
                     var tr = document.createElement('tr');
-                    for(var i = 0, text; i < colNames.length; i++){
-                        tr.addChildNode('th');
+                    for(var i = 0, text, th; i < colNames.length; i++){
+                        th = document.createElement('th');
                         text = document.createTextNode(colNames[i]);
-                        tr.cells[i].appendChild(text);
+                        th.appendChild(text);
+                        tr.appendChild(th);
                     }
                     thead.appendChild(tr);
                     table.appendChild(thead);
@@ -103,6 +118,7 @@
                     var tbody = document.createElement('tbody');
 
                     for(var j = 0, row = {}; j < data.length; j++){
+                        row = data[j];
                         for(var key in data[j]){
                             if(key in colMap){
                                 row[colMap[key].colName] = data[j][key];
@@ -115,12 +131,7 @@
                     elem.appendChild(table);
                 };
 
-                if(scope.options.data){
-                    makeTable();
-                }
-                else{
-                    scope.$watch(scope.options, makeTable);
-                }
+                scope.$watchCollection('options.data', makeTable);
             }
         };
     });
