@@ -7,8 +7,11 @@
     }
 }
 @media print {
-    body * {
+    body *{
         visibility:hidden;
+    }
+    body {
+        margin:0mm !important;
     }
     .printOnly{
         visibility:visible;
@@ -36,5 +39,21 @@
     }
     td div{
         page-break-inside:avoid;
+    }
+    .noPrintMargin{
+        margin:0px !important;
+        padding:0px !important;
+    }
+    @page { margin:0cm }
+    @page :first {
+      margin-top:0cm;
+    }
+    @page :left {
+      margin-left:0cm;
+      margin-right:0cm;
+    }
+    @page :right {
+      margin-left:0cm;
+      margin-right:0cm;
     }
 }
