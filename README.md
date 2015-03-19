@@ -99,17 +99,11 @@ An Angular module that allows users to selectively print elements, as well as pr
   <ul>
     <li>Directive type: Attribute</li>
     <li>Optimizes table for printing. This includes keeping 'td' cell content from being cut-off by page breaks.</li>
-    <li>Sub attributes:</li>
-    <ul>
-      <li><h5>printData</h5> (required)</li>
-      <ul>
-        <li>Takes the array of data objects represented by the table</li>
-      </ul>
-    </ul>
+    <li>Must be passed an array scope object representing the data presented by the table</li>
   </ul>
   This example shows adjustments to an already-visible table in order to tailor it for printing
   ```html
-  <table print-table print-data="people">
+  <table print-table="people">
     <tr>
       <td print-remove>Unwanted field</td>
       <td>Name</td>
@@ -126,7 +120,7 @@ An Angular module that allows users to selectively print elements, as well as pr
   ```
   This example shows a table made to only be visible during printing
   ```html
-  <table print-table print-data="people" print-only>
+  <table print-table="people" print-only>
     <tr>
       <td>Name</td>
       <td>Address</td>
