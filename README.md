@@ -22,6 +22,20 @@ An Angular module that allows users to selectively print elements, as well as pr
       <div>I won't</div>
   </div>
   ```
+<h4>printOnly</h4>
+  <ul>
+    <li>Directive type: Attribute</li>
+    <li>Makes element and its children only visible for printing</li>
+  </ul>
+  ```html
+  <div print-section>
+      <div print-only>
+        I'll print, but until then nobody wants me
+        <p>Me, too!</p>
+      </div>
+      <div>Me, too! Except that people still want to look at me in the meantime...</div>
+  </div>
+  ```
 <h4>printHide</h4>
   <ul>
     <li>Directive type: Attribute</li>
