@@ -4,12 +4,12 @@
       "angularPrint.js",
       "angularPrint.css"
   ],
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/samwiseduzer/angularPrint",
   "authors": [
     "Sam Duzett <samuel.duzett@gmail.com>"
   ],
-  "description": "Angular module that allows the user to select and hide elements for printing and/or dynamically populate and print a table.",
+  "description": "Angular module that allows the user to selectively print, as well as provides optimizations for printing a table.",
   "keywords": [
     "angular",
     "angularJS",

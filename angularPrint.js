@@ -14,7 +14,7 @@
       }
       return value;
     }
-    
+
     var AngularPrint = angular.module('AngularPrint',[]);
     AngularPrint.directive('printSection', function(){
             return {
@@ -82,29 +82,22 @@
         };
     });
     AngularPrint.directive('printTable', function(){
-        return{
-            restrict: 'A',
-            attrs: {printData:'='},
-            link: function(scope, element){
-                function makeTable(newVal){
-                    if(newVal == null) return;
-                    setTimeout(function(){
-                        var elem = element[0];
-                        elem.classList.add('printSection');                        
-                        elem.id = 'print-table';
-                        var tds = elem.getElementsByTagName('td');
-                        for(var i = 0, content, div; i < tds.length; i++){
-                            content = tds[i].innerHTML;
-                            tds[i].innerHTML = '';
-                            div = document.createElement('div');
-                            div.className = 'avoidPageBreak';
-                            div.innerHTML = content;
-                            tds[i].appendChild(div);
-                        }
-                    },1000);
-                }
-                scope.$watchCollection('attrs.printData', makeTable);
-            }
+        return function(scope, element, attr) {
+          scope.$watch(attr.printData, function makeTable(value){
+              if(value == null) return;
+              var elem = element[0];
+              elem.classList.add('printSection');
+              elem.id = 'print-table';
+              var tds = elem.getElementsByTagName('td');
+              for(var i = 0, content, div; i < tds.length; i++){
+                  content = tds[i].innerHTML;
+                  tds[i].innerHTML = '';
+                  div = document.createElement('div');
+                  div.className = 'avoidPageBreak';
+                  div.innerHTML = content;
+                  tds[i].appendChild(div);
+              }
+          });
         };
     });
 
