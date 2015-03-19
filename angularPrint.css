@@ -1,7 +1,4 @@
 @media screen{
-    #apTable, #apTable *{
-        display:none;
-    }
     .printOnly{
         display:none;
     }
@@ -14,9 +11,6 @@
         margin:0mm !important;
     }
     .printOnly{
-        visibility:visible;
-    }
-    #apTable, #apTable *{
         visibility:visible;
     }
     .printSection, .printSection * {

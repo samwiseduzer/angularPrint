@@ -1,35 +1,43 @@
 'use strict';
 
 (function(){
+
+    var lowercase = function(string){return (typeof string === 'string') ? string.toLowerCase() : string;};
+    function toBoolean(value) {
+      if (typeof value === 'function') {
+        value = true;
+      } else if (value && value.length !== 0) {
+        var v = lowercase('' + value);
+        value = !(v == 'f' || v == '0' || v == 'false' || v == 'no' || v == 'n' || v == '[]');
+      } else {
+        value = false;
+      }
+      return value;
+    }
+    
     var AngularPrint = angular.module('AngularPrint',[]);
     AngularPrint.directive('printSection', function(){
             return {
                 restrict: 'A',
-                link: {
-                    post: function(scope, element){
+                link: function(scope, element){
                         element[0].classList.add('printSection');
                     }
-                }
             };
         });
     AngularPrint.directive('printHide', function(){
             return {
                 restrict: 'A',
-                link: {
-                    post: function(scope, element){
+                link: function(scope, element){
                         element[0].classList.add('printHide');
                     }
-                }
             };
         });
     AngularPrint.directive('printRemove', function(){
             return {
                 restrict: 'A',
-                link: {
-                    post: function(scope, element){
+                link: function(scope, element){
                         element[0].classList.add('printRemove');
                     }
-                }
             };
         });
     AngularPrint.directive('printOnly', function(){
@@ -45,11 +53,18 @@
     AngularPrint.directive('printBtn',['$window', function($window){
         return {
             restrict: 'A',
-            link: function(scope, element, attr){
+            link: function(scope, element){
                 element.on('click', function(){
                     $window.print();
                 });
             }
+        };
+    }]);
+    AngularPrint.directive('printIf', ['$animate', function($animate) {
+        return function(scope, element, attr) {
+          scope.$watch(attr.printIf, function applyPrint(value){
+            $animate[toBoolean(value) ? 'addClass' : 'removeClass'](element, 'printSection');
+          });
         };
     }]);
     AngularPrint.directive('printLandscape',function(){
@@ -69,7 +84,7 @@
     AngularPrint.directive('printTable', function(){
         return{
             restrict: 'A',
-            scope: {printData:'='},
+            attrs: {printData:'='},
             link: function(scope, element){
                 function makeTable(newVal){
                     if(newVal == null) return;
@@ -88,7 +103,7 @@
                         }
                     },1000);
                 }
-                scope.$watchCollection('printData', makeTable);
+                scope.$watchCollection('attrs.printData', makeTable);
             }
         };
     });
