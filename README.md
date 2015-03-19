@@ -64,6 +64,17 @@ An Angular module that allows users to selectively print elements, as well as pr
       <div>I'll print, and those bozos upstairs will finally stop making such a ruckus</div>
   </div>
   ```
+<h4>printIf</h4>
+  <ul>
+    <li>Directive type: Attribute</li>
+    <li>Toggles print-visibility based on expression</li>
+  </ul>
+  ```html
+  <!--Pigs do not yet fly, so this div, despite having print-section, will not print-->
+  <div print-section print-if="pigsFly"></div>
+  <!--Sam IS the best, so this div will print, despite not having print-section-->
+  <div print-if="samIsTheBest"></div>
+  ```
 <h4>printBtn</h4>
   <ul>
     <li>Directive type: Attribute</li>
