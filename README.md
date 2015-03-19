@@ -92,20 +92,13 @@ An Angular module that allows users to selectively print elements, as well as pr
     <ul>
       <li><h5>printData</h5> (required)</li>
       <ul>
-        <li>Takes the array of data objects represented by the table and looks for any changes to this data. If a clone of the table is being used, changes to this data will trigger an update to the clone table.</li>
-      </ul>
-      <li><h5>printClone</h5> (optional)</li>
-      <ul>
-        <li>Instead of optimizing the table, this attribute will create an optimized clone of the table. This may be desirable in conjunction with the addClass attribute, as it will cause these classes to be added to the clone only</li>
-      </ul>
-      <li><h5>addClass</h5> (optional)</li>
-      <ul>
-        <li>Takes a string of space-separated classes to be applied to the table</li>
+        <li>Takes the array of data objects represented by the table</li>
       </ul>
     </ul>
   </ul>
+  This example shows adjustments to an already-visible table in order to tailor it for printing
   ```html
-  <table print-table print-clone print-data="people" add-class="red white blue">
+  <table print-table print-data="people">
     <tr>
       <td print-remove>Unwanted field</td>
       <td>Name</td>
@@ -120,4 +113,18 @@ An Angular module that allows users to selectively print elements, as well as pr
     </tr>
   </table>      
   ```
-
+  This example shows a table made to only be visible during printing
+  ```html
+  <table print-table print-data="people" print-only>
+    <tr>
+      <td>Name</td>
+      <td>Address</td>
+      <td>Phone</td>
+    </tr>
+    <tr ng-repeat="person in people">
+      <td>{{person.name}}</td>
+      <td>{{person.address}}</td>
+      <td>{{person.phone}}</td>
+    </tr>
+  </table>      
+  ```
