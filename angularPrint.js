@@ -83,7 +83,7 @@
     });
     AngularPrint.directive('printTable', function(){
         return function(scope, element, attr) {
-          scope.$watch(attr.printData, function makeTable(value){
+          scope.$watch(attr.printTable, function makeTable(value){
               if(value == null) return;
               var elem = element[0];
               elem.classList.add('printSection');
