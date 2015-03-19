@@ -32,22 +32,21 @@
                 }
             };
         });
+    AngularPrint.directive('printOnly', function(){
+            return {
+                restrict: 'A',
+                link: {
+                    post: function(scope, element){
+                        element[0].classList.add('printOnly');
+                    }
+                }
+            };
+        });
     AngularPrint.directive('printBtn',['$window', function($window){
         return {
             restrict: 'A',
             link: function(scope, element, attr){
                 element.on('click', function(){
-                    var table = document.getElementById('apTable');
-                    if(attr.hideTable){
-                        if(table){
-                            table.classList.add('printRemove');
-                        }
-                    }
-                    else{
-                        if(table){
-                            table.classList.remove('printRemove');
-                        }
-                    }
                     $window.print();
                 });
             }
