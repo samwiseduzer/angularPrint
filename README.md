@@ -39,14 +39,17 @@ An Angular module that allows users to selectively print elements, as well as pr
   <li>Optimizes table for printing. This includes keeping 'td' cell content from being cut-off by page breaks.</li>
   <li>Sub attributes:</li>
   <ul>
-    <li><h5>printClone</h5></li>
+    <li><h5>printData</h5> (required)</li>
+    <ul>
+      <li>Takes the array of data objects represented by the table and looks for any changes to this data. If a clone of the table is being used, changes to this data will trigger an update to the clone table.</li>
+    </ul>
+    <li><h5>printClone</h5> (optional)</li>
     <ul>
       <li>Instead of optimizing the table, this attribute will create an optimized clone of the table. This may be desirable in conjunction with the addClass attribute, as it will cause these classes to be added to the clone only</li>
     </ul>
-    <li><h5>addClass</h5></li>
+    <li><h5>addClass</h5> (optional)</li>
     <ul>
       <li>Takes a string of space-separated classes to be applied to the table</li>
     </ul>
-  <ul>
 </ul>
 
