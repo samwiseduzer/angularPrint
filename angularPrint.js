@@ -1,7 +1,5 @@
 'use strict';
-
 (function(){
-
     var lowercase = function(string){return (typeof string === 'string') ? string.toLowerCase() : string;};
     function toBoolean(value) {
       if (typeof value === 'function') {
@@ -14,7 +12,6 @@
       }
       return value;
     }
-
     var AngularPrint = angular.module('AngularPrint',[]);
     AngularPrint.directive('printSection', function(){
             return {
@@ -83,22 +80,24 @@
     });
     AngularPrint.directive('printTable', function(){
         return function(scope, element, attr) {
-          scope.$watch(attr.printTable, function makeTable(value){
-              if(value == null) return;
-              var elem = element[0];
-              elem.classList.add('printSection');
-              elem.id = 'print-table';
-              var tds = elem.getElementsByTagName('td');
-              for(var i = 0, content, div; i < tds.length; i++){
-                  content = tds[i].innerHTML;
-                  tds[i].innerHTML = '';
-                  div = document.createElement('div');
-                  div.className = 'avoidPageBreak';
-                  div.innerHTML = content;
-                  tds[i].appendChild(div);
-              }
-          });
+            scope.$watch(attr.printTable, function makeTable(value){
+                setTimeout(function(){
+                    if(value == null) return;
+                    var elem = element[0];
+                    elem.classList.add('printSection');
+                    elem.id = 'print-table';
+                    var tds = elem.getElementsByTagName('td');
+                    for(var i = 0, content, div; i < tds.length; i++){
+                        content = tds[i].innerHTML;
+                        tds[i].innerHTML = '';
+                        div = document.createElement('div');
+                        div.className = 'avoidPageBreak';
+                        div.innerHTML = content;
+                        tds[i].appendChild(div);
+                    }
+                    element[0] = elem;
+                },1000);
+            });
         };
     });
-
 })();
