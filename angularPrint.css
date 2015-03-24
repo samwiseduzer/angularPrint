@@ -13,6 +13,9 @@
     .printOnly{
         visibility:visible;
     }
+    .printOnly.printRemove{
+        display:none;
+    }
     .printSection, .printSection * {
         visibility:visible;
     }

@@ -47,6 +47,14 @@
                 }
             };
         });
+    AngularPrint.directive('printAvoidBreak', function(){
+            return {
+                restrict: 'A',
+                link: function(scope, element){
+                        element[0].classList.add('avoidPageBreak');
+                    }
+            };
+        });
     AngularPrint.directive('printBtn',['$window', function($window){
         return {
             restrict: 'A',
@@ -61,6 +69,7 @@
         return function(scope, element, attr) {
           scope.$watch(attr.printIf, function applyPrint(value){
             $animate[toBoolean(value) ? 'addClass' : 'removeClass'](element, 'printSection');
+            $animate[(toBoolean(value) && 'printOnly' in attr) ? 'removeClass' : 'addClass'](element, 'printRemove');
           });
         };
     }]);
