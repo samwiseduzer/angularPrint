@@ -4,7 +4,7 @@
       "angularPrint.js",
       "angularPrint.css"
   ],
-  "version": "0.3.5",
+  "version": "0.3.6",
   "homepage": "https://github.com/samwiseduzer/angularPrint",
   "authors": [
     "Sam Duzett <samuel.duzett@gmail.com>"

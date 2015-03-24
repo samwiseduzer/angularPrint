@@ -9,6 +9,7 @@
     }
     body {
         margin:0mm !important;
+        -webkit-print-color-adjust:exact;
     }
     .printOnly{
         visibility:visible;
