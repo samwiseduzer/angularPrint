@@ -95,6 +95,14 @@ An Angular module that allows users to selectively print elements, as well as pr
   <span print-landscape>I will cause any print</span>
   <p print-landscape>to be landscape</p>
   ```
+  <h4>printAvoidBreak</h4>
+  <ul>
+    <li>Directive type: Attribute</li>
+    <li>Prevents page breaks on element</li>
+  </ul>
+  ```html
+  <button print-avoid-break>This element won't get split by page breaks</button>
+  ```
 <h4>printTable</h4>
   <ul>
     <li>Directive type: Attribute</li>
