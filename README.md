@@ -57,7 +57,7 @@ An Angular module that allows users to selectively print elements, as well as pr
   </ul>
   ```html
   <div print-section>
-      <div print-hide>
+      <div print-remove>
         I won't print
         <p>Me, either</p>
       </div>
