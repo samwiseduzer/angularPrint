@@ -13,6 +13,7 @@
     }
     .printOnly{
         visibility:visible;
+        display:initial;
     }
     .printOnly.printRemove{
         display:none;
@@ -37,6 +38,9 @@
     }
     td div{
         page-break-inside:avoid;
+    }
+    thead {
+        display: table-header-group;
     }
     .noPrintMargin{
         margin:0px !important;

@@ -68,8 +68,12 @@
     AngularPrint.directive('printIf', ['$animate', function($animate) {
         return function(scope, element, attr) {
           scope.$watch(attr.printIf, function applyPrint(value){
-            $animate[toBoolean(value) ? 'addClass' : 'removeClass'](element, 'printSection');
-            $animate[(toBoolean(value) && 'printOnly' in attr) ? 'removeClass' : 'addClass'](element, 'printRemove');
+            if('printOnly' in attr){
+                $animate[toBoolean(value) ? 'removeClass' : 'addClass'](element, 'printRemove');
+            }
+            else{
+                $animate[toBoolean(value) ? 'addClass' : 'removeClass'](element, 'printSection');
+            }
           });
         };
     }]);
