@@ -113,32 +113,40 @@ An Angular module that allows users to selectively print elements, as well as pr
   This example shows adjustments to an already-visible table in order to tailor it for printing
   ```html
   <table print-table="people">
-    <tr>
-      <td print-remove>Unwanted field</td>
-      <td>Name</td>
-      <td>Address</td>
-      <td>Phone</td>
-    </tr>
-    <tr ng-repeat="person in people">
-      <td print-remove>{{person.unwantedInfo}}</td>
-      <td>{{person.name}}</td>
-      <td>{{person.address}}</td>
-      <td>{{person.phone}}</td>
-    </tr>
+    <thead>
+      <tr>
+        <td print-remove>Unwanted field</td>
+        <td>Name</td>
+        <td>Address</td>
+        <td>Phone</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="person in people">
+        <td print-remove>{{person.unwantedInfo}}</td>
+        <td>{{person.name}}</td>
+        <td>{{person.address}}</td>
+        <td>{{person.phone}}</td>
+      </tr>
+    </tbody>
   </table>      
   ```
   This example shows a table made to only be visible during printing
   ```html
   <table print-table="people" print-only>
-    <tr>
-      <td>Name</td>
-      <td>Address</td>
-      <td>Phone</td>
-    </tr>
-    <tr ng-repeat="person in people">
-      <td>{{person.name}}</td>
-      <td>{{person.address}}</td>
-      <td>{{person.phone}}</td>
-    </tr>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Address</td>
+        <td>Phone</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="person in people">
+        <td>{{person.name}}</td>
+        <td>{{person.address}}</td>
+        <td>{{person.phone}}</td>
+      </tr>
+    </tbody>
   </table>      
   ```
