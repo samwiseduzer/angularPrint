@@ -108,7 +108,7 @@ An Angular module that allows users to selectively print elements, as well as pr
     <li>Directive type: Attribute</li>
     <li>Optimizes table for printing. This includes keeping 'td' cell content from being cut-off by page breaks.</li>
     <li>Must be passed an array scope object representing the data presented by the table</li>
-    <li>Column headers will persist between pages only if the ```html<thead>``` and ```html<tbody>``` tags are used correctly</li>
+    <li>Column headers will persist between pages only if the ```<thead>``` and ```<tbody>``` tags are used correctly</li>
   </ul>
   This example shows adjustments to an already-visible table in order to tailor it for printing
   ```html
