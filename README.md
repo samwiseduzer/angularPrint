@@ -1,11 +1,10 @@
-# AngularPrint
+# angularPrint
 An Angular module that allows users to selectively print elements, as well as provides optimizations for printing. By default, printing margins are minimized.
 
 <h2>Installation</h2>
 <ul>
   <li>make sure bower is installed</li>
   <li>navigate to the root directory of your project and execute the command "bower install angular-print"</li>
-  <li>import module to your Angular app using the name "AngularPrint"</li>
 </ul>
 
 <h2>Using AngularPrint</h2>
