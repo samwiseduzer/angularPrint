@@ -11,7 +11,7 @@
         margin:0mm !important;
         -webkit-print-color-adjust:exact;
     }
-    .printOnly{
+    .printOnly, .printOnly *{
         visibility:visible;
         display:initial;
     }
