@@ -20,13 +20,13 @@ An Angular module that allows users to selectively print elements, as well as pr
  <script src="public/angularPrint/angularPrint.js"></script>
  ```
  - Import module to your Angular app using the name "AngularPrint":
-```javascript
-(function() {
-  'use strict';
-  
-  angular.module('yourApp', ['AngularPrint', '...']);
-})();
-```
+ ```javascript
+ (function() {
+   'use strict';
+   
+   angular.module('yourApp', ['AngularPrint', '...']);
+ })();
+ ```
 
 ## Using AngularPrint
 #### printSection
