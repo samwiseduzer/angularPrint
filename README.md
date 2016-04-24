@@ -1,3 +1,5 @@
+THIS REPO IS NOT ACTIVELY MAINTAINED and has several incompatibilities with most browsers. I'm happy to test/review/merge pull requests and am open to passing ownership of this project to another.
+
 # AngularPrint
 An Angular module that allows users to selectively print elements, as well as provides optimizations for printing. By default, printing margins are minimized.
 
