@@ -71,7 +71,7 @@ An Angular module that allows users to selectively print elements, as well as pr
   </div>
   ```
 
-#### printHide
+#### printRemove
   - **Directive type:** Attribute
   - **Description**: Makes element invisible during printing
 
