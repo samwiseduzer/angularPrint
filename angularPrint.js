@@ -55,12 +55,14 @@
                     }
             };
         });
-    AngularPrint.directive('printBtn',['$window', function($window){
+    AngularPrint.directive('printBtn',['$window','$timeout', function($window,$timeout){
         return {
             restrict: 'A',
             link: function(scope, element){
                 element.on('click', function(){
-                    $window.print();
+                    $timeout(function () {
+                        $window.print();
+                    }, 0);
                 });
             }
         };
